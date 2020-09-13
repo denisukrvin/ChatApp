@@ -5,6 +5,12 @@ namespace ChatApp.Service.Data
 {
     public partial class user
     {
+        public user()
+        {
+            chatfirst_member_ = new HashSet<chat>();
+            chatsecond_member_ = new HashSet<chat>();
+        }
+
         public int id { get; set; }
         public string name { get; set; }
         public string email { get; set; }
@@ -12,5 +18,8 @@ namespace ChatApp.Service.Data
         public DateTime creation_date { get; set; }
         public DateTime record_updated { get; set; }
         public int record_state { get; set; }
+
+        public virtual ICollection<chat> chatfirst_member_ { get; set; }
+        public virtual ICollection<chat> chatsecond_member_ { get; set; }
     }
 }

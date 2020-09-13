@@ -35,6 +35,7 @@ namespace ChatApp.Service
             // configure DI for application services
             services.AddScoped<IAuthService, AuthService>();
             services.AddScoped<IUserService, UserService>();
+            services.AddScoped<IChatService, ChatService>();
         }
 
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
