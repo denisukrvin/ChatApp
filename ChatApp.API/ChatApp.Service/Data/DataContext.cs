@@ -15,6 +15,7 @@ namespace ChatApp.Service.Data
         {
         }
 
+        public virtual DbSet<chat> chat { get; set; }
         public virtual DbSet<user> user { get; set; }
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
@@ -31,6 +32,25 @@ namespace ChatApp.Service.Data
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
+            modelBuilder.Entity<chat>(entity =>
+            {
+                entity.Property(e => e.creation_date).HasColumnType("date");
+
+                entity.Property(e => e.record_updated).HasColumnType("datetime");
+
+                entity.HasOne(d => d.first_member_)
+                    .WithMany(p => p.chatfirst_member_)
+                    .HasForeignKey(d => d.first_member_id)
+                    .OnDelete(DeleteBehavior.ClientSetNull)
+                    .HasConstraintName("FK_chat_first_user");
+
+                entity.HasOne(d => d.second_member_)
+                    .WithMany(p => p.chatsecond_member_)
+                    .HasForeignKey(d => d.second_member_id)
+                    .OnDelete(DeleteBehavior.ClientSetNull)
+                    .HasConstraintName("FK_chat_second_user");
+            });
+
             modelBuilder.Entity<user>(entity =>
             {
                 entity.Property(e => e.creation_date).HasColumnType("datetime");
