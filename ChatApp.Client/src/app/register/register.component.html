@@ -1,0 +1,29 @@
+<div class="container">
+    <div class="row">
+        <div class="col-12">
+            <form [formGroup]="registerForm" (ngSubmit)="register()">
+                <div class="form-group">
+                    <label for="registerFormName">Name</label>
+                    <input type="text" class="form-control" id="registerFormName" formControlName="name">
+                    <small *ngIf="name.touched && name.errors?.required" class="form-text text-danger">This field is required!</small>
+                </div>
+                <div class="form-group">
+                    <label for="registerFormEmail">Email</label>
+                    <input type="email" class="form-control" id="registerFormEmail" formControlName="email">
+                    <small *ngIf="email.touched && email.errors?.required" class="form-text text-danger">This field is required!</small>
+                </div>
+                <div class="form-group">
+                    <label for="registerFormPassword">Password</label>
+                    <input type="password" class="form-control" id="registerFormPassword" formControlName="password">
+                    <small *ngIf="password.touched && password.errors?.required" class="form-text text-danger">This field is required!</small>
+                </div>
+                <div class="form-group">
+                    <label for="registerFormPasswordConfirm">Confirm password</label>
+                    <input type="password" class="form-control" id="registerFormPasswordConfirm" formControlName="passwordConfirm">
+                    <small *ngIf="passwordConfirm.touched && passwordConfirm.errors?.required" class="form-text text-danger">This field is required!</small>
+                </div>
+                <button type="submit" class="btn btn-primary">Register</button>
+            </form>
+        </div>
+    </div>
+</div>
