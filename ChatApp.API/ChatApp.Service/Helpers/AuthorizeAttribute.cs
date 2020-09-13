@@ -2,6 +2,7 @@
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Http;
 using ChatApp.Service.Models.User;
+using ChatApp.Service.Models.Auth;
 using Microsoft.AspNetCore.Mvc.Filters;
 
 namespace ChatApp.Service.Helpers
@@ -11,11 +12,11 @@ namespace ChatApp.Service.Helpers
     {
         public void OnAuthorization(AuthorizationFilterContext context)
         {
-            var user = (UserModel)context.HttpContext.Items["User"];
+            var user = (UserModel) context.HttpContext.Items["User"];
             if (user == null)
             {
                 // not logged in
-                context.Result = new JsonResult(new { message = "Unauthorized" }) { StatusCode = StatusCodes.Status401Unauthorized };
+                context.Result = new JsonResult(new AuthResponse { Success = false, Message = "Unauthorized" }) { StatusCode = StatusCodes.Status401Unauthorized };
             }
         }
     }
