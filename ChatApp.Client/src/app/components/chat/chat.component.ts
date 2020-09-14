@@ -15,8 +15,8 @@ export class ChatComponent implements OnInit {
   
   ngOnInit(): void {
     this.userId = this.authService.getUserId();
-    this.chatService.all().subscribe(data => {
-      this.chats = data;
+    this.chatService.all().subscribe(res => {
+      this.chats = res;
     });
   }
 

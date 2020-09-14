@@ -13,6 +13,8 @@ import { ChatComponent } from './components/chat/chat.component';
 import { ChatService } from './services/chat.service';
 import { TokenInterceptorService } from './services/token-interceptor.service';
 import { HeaderComponent } from './components/header/header.component';
+import { UserComponent } from './components/user/user.component';
+import { UserService } from './services/user.service';
 
 @NgModule({
   declarations: [
@@ -20,7 +22,8 @@ import { HeaderComponent } from './components/header/header.component';
     LoginComponent,
     RegisterComponent,
     ChatComponent,
-    HeaderComponent
+    HeaderComponent,
+    UserComponent
   ],
   imports: [
     BrowserModule,
@@ -31,6 +34,7 @@ import { HeaderComponent } from './components/header/header.component';
   providers: [
     AuthService,
     ChatService,
+    UserService,
     AuthGuardService,
     {
       provide: HTTP_INTERCEPTORS,

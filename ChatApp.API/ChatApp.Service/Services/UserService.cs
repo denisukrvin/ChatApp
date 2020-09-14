@@ -10,11 +10,15 @@ namespace ChatApp.Service.Services
 {
     public class UserService : IUserService
     {
-        public List<UserModel> All()
+        public List<UserModel> All(int currentUserId = 0)
         {
             using (var context = new DataContext())
             {
                 var condition = context.user.Where(u => u.record_state != 1);
+                // skip current user
+                if (currentUserId > 0)
+                    condition = condition.Where(u => u.id != currentUserId);
+
                 return Map(condition);
             }
         }

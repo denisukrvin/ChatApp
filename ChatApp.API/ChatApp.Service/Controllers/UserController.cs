@@ -1,6 +1,7 @@
 ﻿using ChatApp.Service.Helpers;
 using Microsoft.AspNetCore.Mvc;
 using ChatApp.Service.Interfaces;
+using ChatApp.Service.Extensions;
 
 namespace ChatApp.Service.Controllers
 {
@@ -19,7 +20,8 @@ namespace ChatApp.Service.Controllers
         [HttpGet("all")]
         public IActionResult All()
         {
-            var result = _userService.All();
+            var userId = HttpContext.GetUserId();
+            var result = _userService.All(userId);
             return Ok(result);
         }
     }

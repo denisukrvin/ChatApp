@@ -6,7 +6,7 @@ namespace ChatApp.Service.Interfaces
 {
     public interface IUserService
     {
-        List<UserModel> All();
+        List<UserModel> All(int currentUserId = 0);
         UserModel Get(int userId);
         user Get(string userEmail);
         user CreateOrEdit(UserModel model);
