@@ -12,7 +12,7 @@ export class ChatService {
   private chatPath = environment.apiUrl + '/chat';
   constructor(private http: HttpClient, private authService: AuthService) { }
 
-  all(): Observable<Chat> {
-    return this.http.get<Chat>(this.chatPath + '/all');
+  all(): Observable<Array<Chat>> {
+    return this.http.get<Array<Chat>>(this.chatPath + '/all');
   }
 }

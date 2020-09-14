@@ -12,13 +12,15 @@ import { AuthGuardService } from './services/auth-guard.service';
 import { ChatComponent } from './components/chat/chat.component';
 import { ChatService } from './services/chat.service';
 import { TokenInterceptorService } from './services/token-interceptor.service';
+import { HeaderComponent } from './components/header/header.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     LoginComponent,
     RegisterComponent,
-    ChatComponent
+    ChatComponent,
+    HeaderComponent
   ],
   imports: [
     BrowserModule,

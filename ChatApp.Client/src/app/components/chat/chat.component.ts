@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { Chat } from '../../models/chat/chat';
 import { ChatService } from '../../services/chat.service';
 
 @Component({
@@ -7,11 +8,12 @@ import { ChatService } from '../../services/chat.service';
   styleUrls: ['./chat.component.css']
 })
 export class ChatComponent implements OnInit {
+  chats: Array<Chat>;
   constructor(private chatService: ChatService) { }
-
+  
   ngOnInit(): void {
     this.chatService.all().subscribe(data => {
-      console.log(data);
+      this.chats = data;
     });
   }
 

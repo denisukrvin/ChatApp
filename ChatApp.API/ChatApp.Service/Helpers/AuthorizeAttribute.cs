@@ -2,8 +2,8 @@
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Http;
 using ChatApp.Service.Models.User;
-using ChatApp.Service.Models.Auth;
 using Microsoft.AspNetCore.Mvc.Filters;
+using ChatApp.Service.Models.Common.Api;
 
 namespace ChatApp.Service.Helpers
 {
@@ -16,7 +16,7 @@ namespace ChatApp.Service.Helpers
             if (user == null)
             {
                 // not logged in
-                context.Result = new JsonResult(new AuthResponse { Success = false, Message = "Unauthorized" }) { StatusCode = StatusCodes.Status401Unauthorized };
+                context.Result = new JsonResult(new OperationResponse { Success = false, Message = "Unauthorized" }) { StatusCode = StatusCodes.Status401Unauthorized };
             }
         }
     }

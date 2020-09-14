@@ -5,11 +5,13 @@ using ChatApp.Service.Tools;
 using System.Security.Claims;
 using ChatApp.Service.Helpers;
 using ChatApp.Service.Interfaces;
+using System.Collections.Generic;
 using ChatApp.Service.Models.User;
 using ChatApp.Service.Models.Auth;
 using Microsoft.Extensions.Options;
 using Microsoft.IdentityModel.Tokens;
 using System.IdentityModel.Tokens.Jwt;
+using ChatApp.Service.Models.Common.Api;
 
 namespace ChatApp.Service.Services
 {
@@ -24,25 +26,25 @@ namespace ChatApp.Service.Services
             _userService = userService;
         }
 
-        public AuthResponse Login(LoginRequest request)
+        public OperationResponse Login(LoginRequest request)
         {
             var user = _userService.Get(request.Email);
             if (user == null)
-                return new AuthResponse() { Success = false, Message = "User not found" };
+                return new OperationResponse() { Success = false, Message = "User not found" };
 
             bool isPasswordCorrect = SecurePasswordHasher.Verify(request.Password, user.password);
             if (!isPasswordCorrect)
-                return new AuthResponse() { Success = false, Message = "Invalid password" };
+                return new OperationResponse() { Success = false, Message = "Invalid password" };
 
             var token = GenerateJwtToken(user);
-            return new AuthResponse { Success = true, UserId = user.id, UserName = user.name, UserToken = token };
+            return new OperationResponse { Success = true, Data = new Dictionary<string, object> { { "token", token } } };
         }
 
-        public AuthResponse Register(RegisterRequest request)
+        public OperationResponse Register(RegisterRequest request)
         {
             var user = _userService.Get(request.Email);
             if (user != null)
-                return new AuthResponse() { Success = false, Message = "This email address is already being used" };
+                return new OperationResponse() { Success = false, Message = "This email address is already being used" };
 
             // create user
             var model = new UserModel
@@ -54,10 +56,10 @@ namespace ChatApp.Service.Services
 
             var createUserResult = _userService.CreateOrEdit(model);
             if (createUserResult == null)
-                return new AuthResponse() { Success = false, Message = "Something went wrong, please try again later" };
+                return new OperationResponse() { Success = false, Message = "Something went wrong, please try again later" };
 
             var token = GenerateJwtToken(createUserResult);
-            return new AuthResponse() { Success = true, UserId = createUserResult.id, UserName = createUserResult.name, UserToken = token };
+            return new OperationResponse() { Success = true, Data = new Dictionary<string, object> { { "token", token } } };
         }
 
         private string GenerateJwtToken(user model)
