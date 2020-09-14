@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Chat } from '../../models/chat/chat';
+import { AuthService } from '../../services/auth.service';
 import { ChatService } from '../../services/chat.service';
 
 @Component({
@@ -9,9 +10,11 @@ import { ChatService } from '../../services/chat.service';
 })
 export class ChatComponent implements OnInit {
   chats: Array<Chat>;
-  constructor(private chatService: ChatService) { }
+  userId: number;
+  constructor(private chatService: ChatService, private authService: AuthService) { }
   
   ngOnInit(): void {
+    this.userId = this.authService.getUserId();
     this.chatService.all().subscribe(data => {
       this.chats = data;
     });

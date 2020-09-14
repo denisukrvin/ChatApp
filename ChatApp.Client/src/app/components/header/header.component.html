@@ -1,5 +1,5 @@
 <header>
-  <nav class="navbar navbar-expand-md navbar-light bg-light shadow p-3">
+  <nav class="navbar navbar-expand-md navbar-light bg-white shadow p-3">
     <div class="container">
       <a routerLink="/" class="navbar-brand">ChatApp</a>
       <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
@@ -9,15 +9,15 @@
 
       <div class="collapse navbar-collapse" id="navbarSupportedContent">
         <ul class="navbar-nav mr-auto">
-          <li class="nav-item active">
+          <li class="nav-item active" *ngIf="authService.isAuthenticated()">
             <a routerLink="/" class="nav-link">Home</a>
           </li>
         </ul>
-        <ul class="navbar-nav" *ngIf="isUserAuthenticated">
+        <ul class="navbar-nav" *ngIf="authService.isAuthenticated()">
           <li class="nav-item dropdown">
               <a class="nav-link text-dark dropdown-toggle d-flex align-items-center" href="#" id="navbarDropdownMenuLink" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                   <img src="assets/img/default-user-avatar.png" class="rounded-circle" style="max-height: 30px;" />
-                  <span class="ml-2">UserName</span>
+                  <span class="ml-2">{{authService.getUserName()}}</span>
               </a>
               <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
                   <a routerLink="/logout" (click)="logout()" class="dropdown-item text-dark">Logout</a>

@@ -47,7 +47,7 @@ namespace ChatApp.Service.Helpers
                 }, out SecurityToken validatedToken);
 
                 var jwtToken = (JwtSecurityToken)validatedToken;
-                var userId = int.Parse(jwtToken.Claims.First(x => x.Type == "UserId").Value);
+                var userId = int.Parse(jwtToken.Claims.First(x => x.Type == "user_id").Value);
 
                 // attach user to context on successful jwt validation
                 context.Items["User"] = userService.Get(userId);

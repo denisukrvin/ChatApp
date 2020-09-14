@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { environment } from '../../environments/environment';
+import jwt_decode from "jwt-decode";
 
 @Injectable({
   providedIn: 'root'
@@ -27,6 +28,11 @@ export class AuthService {
     return localStorage.getItem('token');
   }
 
+  getDecodedToken() {
+    var token = this.getToken();
+    return jwt_decode(token);
+  }
+
   removeToken() {
     localStorage.removeItem('token');
   }
@@ -36,5 +42,15 @@ export class AuthService {
       return true;
     }
     return false;
+  }
+
+  getUserId() {
+    var token = this.getDecodedToken();
+    return token['user_id'];
+  }
+
+  getUserName() {
+    var token = this.getDecodedToken();
+    return token['user_name'];
   }
 }

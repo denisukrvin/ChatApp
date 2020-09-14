@@ -8,11 +8,9 @@ import { AuthService } from '../../services/auth.service';
   styleUrls: ['./header.component.css']
 })
 export class HeaderComponent implements OnInit {
-  isUserAuthenticated: boolean = false;
   constructor(private authService: AuthService, private router: Router) { }
 
   ngOnInit(): void {
-    this.isUserAuthenticated = this.authService.isAuthenticated();
   }
 
   logout() {
