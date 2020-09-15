@@ -30,14 +30,11 @@ namespace ChatApp.Service.Controllers
         [HttpPost("create")]
         public IActionResult Create(CreateChatRequest request)
         {
-            if (request == null)
-                return BadRequest();
+            if (!ModelState.IsValid)
+                return BadRequest(ModelState);
 
             var userId = HttpContext.GetUserId();
-            if (request.FirstMemberId != userId && request.SecondMemberId != userId)
-                return BadRequest();
-
-            var result = _chatService.Create(request.FirstMemberId, request.SecondMemberId);
+            var result = _chatService.Create(userId, request.UserId);
             return Ok(result);
         }
     }

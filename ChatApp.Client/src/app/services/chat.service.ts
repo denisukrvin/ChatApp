@@ -15,4 +15,8 @@ export class ChatService {
   all(): Observable<Array<Chat>> {
     return this.http.get<Array<Chat>>(this.chatPath + '/all');
   }
+
+  create(userId): Observable<any> {
+    return this.http.post(this.chatPath + '/create', {'UserId': userId});
+  }
 }

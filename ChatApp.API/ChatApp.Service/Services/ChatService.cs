@@ -34,14 +34,13 @@ namespace ChatApp.Service.Services
 
             using (var context = new DataContext())
             {
-                var condition = context.chat
-                    .FirstOrDefault(c => 
+                var existingChat = context.chat.FirstOrDefault(c => 
                         c.first_member_id == firstMemberId && c.second_member_id == secondMemberId ||
                         c.first_member_id == secondMemberId && c.second_member_id == firstMemberId &&
                         c.record_state != 1);
 
-                if (condition != null)
-                    return new OperationResponse { Success = true };
+                if (existingChat != null)
+                    return new OperationResponse { Success = true, Data = new Dictionary<string, object> { { "chat_id", existingChat.id } } };
 
                 var chat = new chat();
                 chat.first_member_id = firstMemberId;
@@ -54,7 +53,7 @@ namespace ChatApp.Service.Services
                 context.chat.Add(chat);
                 context.SaveChanges();
 
-                return new OperationResponse { Success = true };
+                return new OperationResponse { Success = true, Data = new Dictionary<string, object> { { "chat_id", chat.id } } };
             }
         }
 

@@ -14,7 +14,7 @@
                             {{user.email}}
                         </div>
                         <div class="user-chat-btn mt-2">
-                            <button type="button" class="btn btn-success btn-sm">Send message</button>
+                            <button (click)="createChat(user.id)" type="button" class="btn btn-success btn-sm">Send message</button>
                         </div>
                     </div>
                 </div>
