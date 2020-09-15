@@ -1,19 +1,28 @@
 <div class="container">
-    <div class="row">
-        <div class="col-12">
-            <form [formGroup]="loginForm" (ngSubmit)="login()">
-                <div class="form-group">
-                    <label for="loginFormEmail">Email</label>
-                    <input type="email" class="form-control" id="loginFormEmail" formControlName="email">
-                    <small *ngIf="email.touched && email.errors?.required" class="form-text text-danger">This field is required!</small>
+    <div class="row d-flex justify-content-center">
+        <div class="col-10 col-sm-8 col-md-6 col-lg-4">
+            <div class="card p-2">
+                <div class="card-body">
+                    <h4 class="card-title text-center">Login</h4>
+                    <hr />
+                    <form [formGroup]="loginForm" (ngSubmit)="login()">
+                        <div class="form-group">
+                            <label for="loginFormEmail">Email</label>
+                            <input type="email" class="form-control" id="loginFormEmail" formControlName="email">
+                            <small *ngIf="email.touched && email.errors?.required" class="form-text text-danger">This field is required!</small>
+                        </div>
+                        <div class="form-group">
+                            <label for="loginFormPassword">Password</label>
+                            <input type="password" class="form-control" id="loginFormPassword" formControlName="password">
+                            <small *ngIf="password.touched && password.errors?.required" class="form-text text-danger">This field is required!</small>
+                        </div>
+                        <div class="form-group">
+                            <button type="submit" class="btn btn-primary btn-block">Login</button>
+                            <p class="text-center pt-3">Don't have an account? <a routerLink="/register">Register</a></p>
+                        </div>
+                    </form>
                 </div>
-                <div class="form-group">
-                    <label for="loginFormPassword">Password</label>
-                    <input type="password" class="form-control" id="loginFormPassword" formControlName="password">
-                    <small *ngIf="password.touched && password.errors?.required" class="form-text text-danger">This field is required!</small>
-                </div>
-                <button type="submit" class="btn btn-primary">Login</button>
-            </form>
+            </div>
         </div>
     </div>
 </div>
