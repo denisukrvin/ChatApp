@@ -14,4 +14,8 @@ export class UserService {
   all(): Observable<Array<User>> {
     return this.http.get<Array<User>>(this.userPath + '/all');
   }
+
+  get(id): Observable<User> {
+    return this.http.get<User>(this.userPath + '/get' + `/?userId=${id}`);
+  }
 }

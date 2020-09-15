@@ -24,5 +24,16 @@ namespace ChatApp.Service.Controllers
             var result = _userService.All(userId);
             return Ok(result);
         }
+
+        [HttpGet]
+        [Route("get")]
+        public IActionResult Get(int userId)
+        {
+            if (userId == 0 || userId == HttpContext.GetUserId())
+                return BadRequest();
+
+            var user = _userService.Get(userId);
+            return Ok(user);
+        }
     }
 }
