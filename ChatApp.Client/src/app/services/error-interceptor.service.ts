@@ -2,29 +2,19 @@ import { HttpEvent, HttpHandler, HttpInterceptor, HttpRequest } from '@angular/c
 import { Injectable } from '@angular/core';
 import { Observable, throwError } from 'rxjs';
 import { retry, catchError } from 'rxjs/operators';
+import { ToastrService } from 'ngx-toastr';
 
 @Injectable({
   providedIn: 'root'
 })
 export class ErrorInterceptorService implements HttpInterceptor {
 
-  constructor() { }
+  constructor(private toastrService: ToastrService) { }
   intercept(request: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
     return next.handle(request).pipe(
       retry(1),
       catchError((err) => {
-        if (err.status === 401) {
-          alert('error 401');
-        }
-        else if (err.status === 404) {
-          alert('error 404');
-        }
-        else if (err.status === 400) {
-          alert('error 400');
-        }
-        else {
-          alert('Unknown error');
-        }
+        this.toastrService.error('Something went wrong, please try again later');
         return throwError(err);
       })
     )
