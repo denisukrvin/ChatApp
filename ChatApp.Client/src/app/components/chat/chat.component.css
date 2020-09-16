@@ -1,4 +1,10 @@
-.comments-list {
+.messages-block {
     height: 500px;
     overflow-y: scroll;
+}
+
+.message-text {
+    background-color: #f2f6f9;
+    border-radius: 6px;
+    padding: 10px;
 }

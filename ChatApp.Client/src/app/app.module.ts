@@ -19,6 +19,7 @@ import { UserDetailsComponent } from './components/user-details/user-details.com
 import { ErrorInterceptorService } from './services/error-interceptor.service';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { ToastrModule } from 'ngx-toastr';
+import { MessageService } from './services/message.service';
 
 @NgModule({
   declarations: [
@@ -40,8 +41,9 @@ import { ToastrModule } from 'ngx-toastr';
   ],
   providers: [
     AuthService,
-    ChatService,
     UserService,
+    ChatService,
+    MessageService,
     AuthGuardService,
     {
       provide: HTTP_INTERCEPTORS,

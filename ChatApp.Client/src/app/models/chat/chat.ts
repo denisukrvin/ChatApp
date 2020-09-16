@@ -1,4 +1,4 @@
-import { User } from '../../models/user/user';
+import { User } from '../user/user';
 
 export interface Chat {
     id: number;
