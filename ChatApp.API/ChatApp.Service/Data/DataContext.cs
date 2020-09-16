@@ -16,6 +16,7 @@ namespace ChatApp.Service.Data
         }
 
         public virtual DbSet<chat> chat { get; set; }
+        public virtual DbSet<message> message { get; set; }
         public virtual DbSet<user> user { get; set; }
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
@@ -49,6 +50,21 @@ namespace ChatApp.Service.Data
                     .HasForeignKey(d => d.second_member_id)
                     .OnDelete(DeleteBehavior.ClientSetNull)
                     .HasConstraintName("FK_chat_second_user");
+            });
+
+            modelBuilder.Entity<message>(entity =>
+            {
+                entity.Property(e => e.creation_date).HasColumnType("datetime");
+
+                entity.Property(e => e.record_updated).HasColumnType("datetime");
+
+                entity.Property(e => e.text).IsRequired();
+
+                entity.HasOne(d => d.user_)
+                    .WithMany(p => p.message)
+                    .HasForeignKey(d => d.user_id)
+                    .OnDelete(DeleteBehavior.ClientSetNull)
+                    .HasConstraintName("FK_message_user");
             });
 
             modelBuilder.Entity<user>(entity =>

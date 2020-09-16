@@ -9,6 +9,7 @@ namespace ChatApp.Service.Data
         {
             chatfirst_member_ = new HashSet<chat>();
             chatsecond_member_ = new HashSet<chat>();
+            message = new HashSet<message>();
         }
 
         public int id { get; set; }
@@ -21,5 +22,6 @@ namespace ChatApp.Service.Data
 
         public virtual ICollection<chat> chatfirst_member_ { get; set; }
         public virtual ICollection<chat> chatsecond_member_ { get; set; }
+        public virtual ICollection<message> message { get; set; }
     }
 }

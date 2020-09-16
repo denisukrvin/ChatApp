@@ -30,7 +30,7 @@ namespace ChatApp.Service.Services
         public OperationResponse Create(int firstMemberId, int secondMemberId)
         {
             if (firstMemberId == 0 || secondMemberId == 0 || firstMemberId == secondMemberId)
-                return new OperationResponse { Success = false };
+                return new OperationResponse { Success = false, Message = "Something went wrong, please try again later" };
 
             using (var context = new DataContext())
             {
@@ -63,19 +63,9 @@ namespace ChatApp.Service.Services
             {
                 Id = c.id,
                 FirstMemberId = c.first_member_id,
-                FirstMember = new UserModel
-                {
-                    Id = c.first_member_.id,
-                    Name = c.first_member_.name,
-                    Email = c.first_member_.email
-                },
+                FirstMember = new UserModel{ Id = c.first_member_.id, Name = c.first_member_.name, Email = c.first_member_.email },
                 SecondMemberId = c.second_member_id,
-                SecondMember = new UserModel
-                {
-                    Id = c.second_member_.id,
-                    Name = c.second_member_.name,
-                    Email = c.second_member_.email
-                }
+                SecondMember = new UserModel{ Id = c.second_member_.id, Name = c.second_member_.name, Email = c.second_member_.email }
             }).ToList();
         }
     }

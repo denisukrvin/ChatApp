@@ -4,6 +4,7 @@ import { User } from '../../models/user/user';
 import { UserService } from '../../services/user.service';
 import { ChatService } from '../../services/chat.service';
 import { map, mergeMap } from 'rxjs/operators';
+import { ToastrService } from 'ngx-toastr';
 
 @Component({
   selector: 'app-user-details',
@@ -13,7 +14,7 @@ import { map, mergeMap } from 'rxjs/operators';
 export class UserDetailsComponent implements OnInit {
   userId: string;
   user: User = { id: 0, name: 'n/a', email: 'n/a' };
-  constructor(private route: ActivatedRoute, private router: Router, private userService: UserService, private chatService: ChatService) { 
+  constructor(private route: ActivatedRoute, private router: Router, private userService: UserService, private chatService: ChatService, private toastrService: ToastrService) { 
     this.fetchData();
   }
 
@@ -25,7 +26,12 @@ export class UserDetailsComponent implements OnInit {
       const id = params['id'];
       return id;
     }), mergeMap(id => this.userService.get(id))).subscribe(res => {
-      this.user = res;
+      if (res){
+        this.user = res;
+      }
+      else {
+        this.toastrService.error('User is not found');
+      }
     })
   }
 
@@ -35,7 +41,7 @@ export class UserDetailsComponent implements OnInit {
         this.router.navigate(['']);
       }
       else { 
-        alert(res['message']);
+        this.toastrService.error(res['message']);
       }
     })
   }
