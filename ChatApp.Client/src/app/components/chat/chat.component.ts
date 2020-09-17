@@ -18,7 +18,7 @@ export class ChatComponent implements OnInit {
   messagesList: Array<Message> = [];
   currentUserId: number;
   selectedChatId: number;
-  chatMessageText: string = '';
+  chatMessageText: string = '';    
 
   constructor(private chatService: ChatService, private authService: AuthService, private messageService: MessageService, 
     private toastrService: ToastrService, private signalrService: SignalRService) { }
@@ -71,5 +71,5 @@ export class ChatComponent implements OnInit {
       this.messagesList.push(message);
     })
   }
-  
+
 }

@@ -1,16 +1,23 @@
 <div class="container">
     <div class="row">
         <div class="col-md-4">
-            <div class="list-group">
-                <a href="#" class="list-group-item list-group-item-action d-flex align-items-center" 
-                    [ngClass]="{'active': selectedChatId === chat.id}" (click)="showChatAndGetMessages(chat.id)" *ngFor="let chat of chatsList">
-                    <div class="chat-image">
-                        <img src="assets/img/default-user-avatar.png" class="rounded-circle" style="max-height: 30px;" />
+            <div class="card">
+                <div class="card-header text-center">
+                    Chats
+                </div>
+                <div class="card-body chats-block">
+                    <ul class="list-unstyled" *ngIf="chatsList.length > 0">
+                        <li class="media chats-block-item d-flex align-items-center p-2" [ngClass]="{'active': selectedChatId === chat.id}" (click)="showChatAndGetMessages(chat.id)" *ngFor="let chat of chatsList">
+                            <img src="assets/img/default-user-avatar.png" class="rounded-circle" style="max-height: 35px;">
+                            <div class="media-body ml-2">
+                                {{currentUserId == chat.firstMemberId ? chat.secondMember.name : chat.firstMember.name}}
+                            </div>
+                        </li>
+                    </ul>
+                    <div class="alert alert-light text-center" role="alert" *ngIf="chatsList.length === 0">
+                        Chats not found
                     </div>
-                    <div class="chat-name ml-2">
-                        {{currentUserId == chat.firstMemberId ? chat.secondMember.name : chat.firstMember.name}}
-                    </div>
-                </a>
+                </div>
             </div>
         </div>
         <div class="col-md-8">
