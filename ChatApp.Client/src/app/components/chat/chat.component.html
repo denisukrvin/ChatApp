@@ -3,12 +3,12 @@
         <div class="col-md-4">
             <div class="list-group">
                 <a href="#" class="list-group-item list-group-item-action d-flex align-items-center" 
-                    [ngClass]="{'active': selectedChatId === chat.id}" (click)="getMessages(chat.id)" *ngFor="let chat of chats">
+                    [ngClass]="{'active': selectedChatId === chat.id}" (click)="showChatAndGetMessages(chat.id)" *ngFor="let chat of chatsList">
                     <div class="chat-image">
                         <img src="assets/img/default-user-avatar.png" class="rounded-circle" style="max-height: 30px;" />
                     </div>
                     <div class="chat-name ml-2">
-                        {{userId == chat.firstMemberId ? chat.secondMember.name : chat.firstMember.name}}
+                        {{currentUserId == chat.firstMemberId ? chat.secondMember.name : chat.firstMember.name}}
                     </div>
                 </a>
             </div>
@@ -19,8 +19,8 @@
                     Messages
                 </div>
                 <div class="card-body messages-block">
-                    <ul class="list-unstyled" *ngIf="messages.length > 0">
-                        <li class="media mb-3" *ngFor="let message of messages">
+                    <ul class="list-unstyled" *ngIf="messagesList.length > 0">
+                        <li class="media mb-3" *ngFor="let message of messagesList">
                             <img src="assets/img/default-user-avatar.png" class="rounded-circle" style="max-height: 40px;">
                             <div class="media-body ml-3">
                                 <div class="d-flex justify-content-between align-items-center">
@@ -37,16 +37,16 @@
                             </div>
                         </li>
                     </ul>
-                    <div class="alert alert-light text-center" role="alert" *ngIf="messages.length === 0">
+                    <div class="alert alert-light text-center" role="alert" *ngIf="messagesList.length === 0">
                         Messages not found
                     </div>
                 </div>
                 <div class="card-footer">
                     <div class="form-group">
-                        <textarea class="form-control" rows="4" placeholder="Write a message..." #messageText></textarea>
+                        <textarea [(ngModel)]="chatMessageText" class="form-control" rows="4" placeholder="Write a message..."></textarea>
                     </div>
                     <div class="form-group d-flex justify-content-end">
-                        <button type="button" class="btn btn-success btn-sm" (click)="sendMessage(messageText.value)">Send</button>
+                        <button type="button" class="btn btn-success btn-sm" (click)="sendMessage()">Send</button>
                     </div>
                 </div>
             </div>

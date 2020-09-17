@@ -1,4 +1,5 @@
 using ChatApp.Service.Data;
+using ChatApp.Service.Hubs;
 using ChatApp.Service.Helpers;
 using ChatApp.Service.Services;
 using ChatApp.Service.Interfaces;
@@ -23,6 +24,7 @@ namespace ChatApp.Service
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddCors();
+            services.AddSignalR();
             services.AddControllers();
 
             // configure strongly typed settings object
@@ -51,15 +53,16 @@ namespace ChatApp.Service
 
             // global cors policy
             app.UseCors(x => x
-                .AllowAnyOrigin()
                 .AllowAnyMethod()
-                .AllowAnyHeader());
+                .AllowAnyHeader()
+                .WithOrigins("http://localhost:4200")
+                .AllowCredentials());
 
             // custom jwt auth middleware
             app.UseMiddleware<JwtMiddleware>();
-
             app.UseEndpoints(endpoints =>
             {
+                endpoints.MapHub<ChatHub>("/chathub");
                 endpoints.MapControllers();
             });
         }

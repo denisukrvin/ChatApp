@@ -24,6 +24,18 @@ namespace ChatApp.Service.Services
             }
         }
 
+        public MessageModel Get(int messageId)
+        {
+            if (messageId == 0)
+                return null;
+
+            using (var context = new DataContext())
+            {
+                var condition = context.message.Include(m => m.user_).Where(m => m.id == messageId && m.record_state != 1);
+                return Map(condition).FirstOrDefault();
+            }
+        }
+
         public OperationResponse Create(int chatId, int userId, string text)
         {
             if (chatId == 0 || userId == 0 || string.IsNullOrWhiteSpace(text))
@@ -43,7 +55,7 @@ namespace ChatApp.Service.Services
                 context.message.Add(message);
                 context.SaveChanges();
 
-                return new OperationResponse { Success = true };
+                return new OperationResponse { Success = true, Data = new Dictionary<string, object> { { "message_id", message.id } } };
             }
         }
 

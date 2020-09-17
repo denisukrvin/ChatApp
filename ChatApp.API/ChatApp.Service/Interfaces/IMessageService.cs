@@ -7,6 +7,7 @@ namespace ChatApp.Service.Interfaces
     public interface IMessageService
     {
         List<MessageModel> All(int chatId);
+        MessageModel Get(int messageId);
         OperationResponse Create(int chatId, int userId, string text);
     }
 }

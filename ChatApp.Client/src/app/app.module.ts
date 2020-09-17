@@ -20,6 +20,8 @@ import { ErrorInterceptorService } from './services/error-interceptor.service';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { ToastrModule } from 'ngx-toastr';
 import { MessageService } from './services/message.service';
+import { FormsModule } from '@angular/forms';
+import { SignalRService } from './services/signalr.service';
 
 @NgModule({
   declarations: [
@@ -35,6 +37,7 @@ import { MessageService } from './services/message.service';
     BrowserModule,
     AppRoutingModule,
     ReactiveFormsModule,
+    FormsModule,
     HttpClientModule,
     BrowserAnimationsModule,
     ToastrModule.forRoot()
@@ -44,6 +47,7 @@ import { MessageService } from './services/message.service';
     UserService,
     ChatService,
     MessageService,
+    SignalRService,
     AuthGuardService,
     {
       provide: HTTP_INTERCEPTORS,

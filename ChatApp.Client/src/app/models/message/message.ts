@@ -1,6 +1,6 @@
 import { User } from '../user/user';
 
-export interface Message {
+export class Message {
     id: number;
     chatId: number;
     userId: number;
