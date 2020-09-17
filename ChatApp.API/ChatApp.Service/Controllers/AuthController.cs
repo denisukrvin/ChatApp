@@ -19,7 +19,7 @@ namespace ChatApp.Service.Controllers
         public IActionResult Login(LoginRequest request)
         {
             if (!ModelState.IsValid)
-                return BadRequest(ModelState);
+                return BadRequest();
 
             var result = _authService.Login(request);
             return Ok(result);
@@ -29,7 +29,7 @@ namespace ChatApp.Service.Controllers
         public IActionResult Register(RegisterRequest request)
         {
             if (!ModelState.IsValid)
-                return BadRequest(ModelState);
+                return BadRequest();
 
             var result = _authService.Register(request);
             return Ok(result);

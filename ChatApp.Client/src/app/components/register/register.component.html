@@ -8,23 +8,41 @@
                     <form [formGroup]="registerForm" (ngSubmit)="register()">
                         <div class="form-group">
                             <label for="registerFormName">Name</label>
-                            <input type="text" class="form-control" id="registerFormName" formControlName="name">
-                            <small *ngIf="name.touched && name.errors?.required" class="form-text text-danger">This field is required!</small>
+                            <input type="text" formControlName="name" class="form-control" id="registerFormName" [ngClass]="{'is-invalid':submitted && name.errors}">
+                            <div *ngIf="submitted && name.errors" class="invalid-feedback">
+                                <div *ngIf="name.errors?.required">Name is required</div>
+                                <div *ngIf="name.errors?.minlength">Name must be at least 2 characters</div>
+                                <div *ngIf="name.errors?.maxlength">Name must be no more than 30 characters</div>
+                            </div>
                         </div>
                         <div class="form-group">
                             <label for="registerFormEmail">Email</label>
-                            <input type="email" class="form-control" id="registerFormEmail" formControlName="email">
-                            <small *ngIf="email.touched && email.errors?.required" class="form-text text-danger">This field is required!</small>
+                            <input type="email" formControlName="email" class="form-control" id="registerFormEmail" [ngClass]="{'is-invalid':submitted && email.errors}">
+                            <div *ngIf="submitted && email.errors" class="invalid-feedback">
+                                <div *ngIf="email.errors?.required">Email is required</div>
+                                <div *ngIf="email.errors?.email">Email must be a valid email address</div>
+                                <div *ngIf="email.errors?.minlength">Email must be at least 6 characters</div>
+                                <div *ngIf="email.errors?.maxlength">Email must be no more than 30 characters</div>
+                            </div>
                         </div>
                         <div class="form-group">
                             <label for="registerFormPassword">Password</label>
-                            <input type="password" class="form-control" id="registerFormPassword" formControlName="password">
-                            <small *ngIf="password.touched && password.errors?.required" class="form-text text-danger">This field is required!</small>
+                            <input type="password" formControlName="password" class="form-control" id="registerFormPassword" [ngClass]="{'is-invalid':submitted && password.errors}">
+                            <div *ngIf="submitted && password.errors" class="invalid-feedback">
+                                <div *ngIf="password.errors?.required">Password is required</div>
+                                <div *ngIf="password.errors?.minlength">Password must be at least 6 characters</div>
+                                <div *ngIf="password.errors?.maxlength">Password must be no more than 20 characters</div>
+                            </div>
                         </div>
                         <div class="form-group">
                             <label for="registerFormPasswordConfirm">Confirm password</label>
-                            <input type="password" class="form-control" id="registerFormPasswordConfirm" formControlName="passwordConfirm">
-                            <small *ngIf="passwordConfirm.touched && passwordConfirm.errors?.required" class="form-text text-danger">This field is required!</small>
+                            <input type="password" formControlName="passwordConfirm" class="form-control" id="registerFormPasswordConfirm" [ngClass]="{'is-invalid':submitted && passwordConfirm.errors}">
+                            <div *ngIf="submitted && passwordConfirm.errors" class="invalid-feedback">
+                                <div *ngIf="passwordConfirm.errors?.required">Password confirm is required</div>
+                                <div *ngIf="passwordConfirm.errors?.minlength">Password confirm must be at least 6 characters</div>
+                                <div *ngIf="passwordConfirm.errors?.maxlength">Password confirm must be no more than 20 characters</div>
+                                <div *ngIf="passwordConfirm.errors?.mustMatch">Passwords must match</div>
+                            </div>
                         </div>
                         <div class="form-group">
                             <button type="submit" class="btn btn-primary btn-block">Register</button>

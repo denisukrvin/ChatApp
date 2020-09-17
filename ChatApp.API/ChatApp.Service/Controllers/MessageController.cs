@@ -38,7 +38,7 @@ namespace ChatApp.Service.Controllers
         public IActionResult Create(CreateMessageRequest request)
         {
             if (!ModelState.IsValid)
-                return BadRequest(ModelState);
+                return BadRequest();
 
             var userId = HttpContext.GetUserId();
             var result = _messageService.Create(request.ChatId, userId, request.Text);
