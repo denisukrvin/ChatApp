@@ -5,7 +5,7 @@ import { ChatService } from '../../services/chat.service';
 import { MessageService } from '../../services/message.service';
 import { Message } from '../../models/message/message';
 import { ToastrService } from 'ngx-toastr';
-import { SignalRService } from '../../services/signalr.service';
+import * as signalR from '@microsoft/signalr';
 
 @Component({
   selector: 'app-chat',
@@ -18,10 +18,10 @@ export class ChatComponent implements OnInit {
   messagesList: Array<Message> = [];
   currentUserId: number;
   selectedChatId: number;
-  chatMessageText: string = '';    
+  chatMessageText: string = '';
+  private hubConnection: signalR.HubConnection;
 
-  constructor(private chatService: ChatService, private authService: AuthService, private messageService: MessageService, 
-    private toastrService: ToastrService, private signalrService: SignalRService) { }
+  constructor(private chatService: ChatService, private authService: AuthService, private messageService: MessageService, private toastrService: ToastrService) { }
   
   ngOnInit(): void {
     this.fetchData();
@@ -64,12 +64,24 @@ export class ChatComponent implements OnInit {
     }
   }
 
-  initializeSignalRConnection(chatId: number) {
-    this.signalrService.startConnection(chatId);
-    this.signalrService.addReceiveMessageListener();
-    this.signalrService.receivedMessageObs.subscribe((message: Message) => {
-      this.messagesList.push(message);
-    })
+  initializeSignalRConnection(chatId: number) {   
+    if (this.hubConnection) {
+      this.hubConnection.stop();
+    }
+
+    this.hubConnection = new signalR.HubConnectionBuilder()
+                            .withUrl('https://localhost:44330/chathub?chatId=' + chatId, {skipNegotiation: true, transport: signalR.HttpTransportType.WebSockets})
+                            .configureLogging(signalR.LogLevel.Information)
+                            .build();
+
+    this.hubConnection
+      .start()
+      .then(() => console.log('Connection started'))
+      .catch(err => console.log('Error while starting connection: ' + err))
+
+      this.hubConnection.on('ReceiveMessage', (message) => {
+        this.messagesList.push(message);
+      });
   }
 
 }

@@ -32,7 +32,7 @@ export class LoginComponent implements OnInit {
     this.authService.login(this.loginForm.value).subscribe(res => {
       if (res['success'] && res['data']['token']) {
         this.authService.saveToken(res['data']['token']);
-        this.router.navigate(['']);
+        this.router.navigate(['']);   
       }
       else { 
         this.toastrService.error(res['message']);
