@@ -1,0 +1,36 @@
+<div class="container">
+    <div class="row d-flex justify-content-center">
+        <div class="col-10 col-sm-9 col-md-7 col-lg-5">
+            <div class="card p-2">
+                <div class="card-body">
+                    <form [formGroup]="profileForm" (ngSubmit)="edit()">
+                        <div class="form-group text-center">
+                            <input type="file" accept="image/*" (change)="onFileSelected($event, profileAvatarTag)" #inputImage hidden>
+                            <img src="{{ profileAvatar ? profileAvatar : 'assets/img/default-user-avatar.png'}}" class="rounded-circle profile-avatar" style="max-height: 96px;" (click)="inputImage.click()" #profileAvatarTag />                        
+                        </div>
+                        <div class="form-group">
+                            <label for="profileFormName">Name</label>
+                            <input type="text" formControlName="name" class="form-control" id="profileFormName" [ngClass]="{'is-invalid':submitted && name.errors}">
+                            <div *ngIf="submitted && name.errors" class="invalid-feedback">
+                                <div *ngIf="name.errors?.required">Name is required</div>
+                                <div *ngIf="name.errors?.minlength">Name must be at least 2 characters</div>
+                                <div *ngIf="name.errors?.maxlength">Name must be no more than 30 characters</div>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="profileFormDescription">Description</label>
+                            <textarea formControlName="description" class="form-control" id="profileFormDescription" [ngClass]="{'is-invalid':submitted && description.errors}" rows="4"></textarea>
+                            <div *ngIf="submitted && description.errors" class="invalid-feedback">
+                                <div *ngIf="description.errors?.minlength">Description must be at least 1 characters</div>
+                                <div *ngIf="description.errors?.maxlength">Description must be no more than 500 characters</div>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <button type="submit" class="btn btn-primary btn-block">Save</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

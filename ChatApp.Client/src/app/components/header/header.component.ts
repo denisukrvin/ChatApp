@@ -15,6 +15,6 @@ export class HeaderComponent implements OnInit {
 
   logout() {
     this.authService.removeToken();
-    this.router.navigate(['login']);
+    this.router.navigate(['/login']);
   }
 }

@@ -23,6 +23,7 @@
                   <span class="ml-2">{{authService.getUserName()}}</span>
               </a>
               <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
+                  <a routerLink="/profile" class="dropdown-item text-dark">Profile</a>
                   <a routerLink="/logout" (click)="logout()" class="dropdown-item text-dark">Logout</a>
               </div>
           </li>

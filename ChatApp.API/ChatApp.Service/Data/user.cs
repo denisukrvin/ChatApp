@@ -19,6 +19,8 @@ namespace ChatApp.Service.Data
         public DateTime creation_date { get; set; }
         public DateTime record_updated { get; set; }
         public int record_state { get; set; }
+        public string avatar { get; set; }
+        public string description { get; set; }
 
         public virtual ICollection<chat> chatfirst_member_ { get; set; }
         public virtual ICollection<chat> chatsecond_member_ { get; set; }

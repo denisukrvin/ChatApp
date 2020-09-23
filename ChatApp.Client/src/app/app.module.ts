@@ -23,6 +23,8 @@ import { MessageService } from './services/message.service';
 import { FormsModule } from '@angular/forms';
 import { HomeComponent } from './components/home/home.component';
 import { ChatsListComponent } from './components/chats-list/chats-list.component';
+import { ProfileComponent } from './components/profile/profile.component';
+import { ProfileService } from './services/profile.service';
 
 @NgModule({
   declarations: [
@@ -34,7 +36,8 @@ import { ChatsListComponent } from './components/chats-list/chats-list.component
     UserComponent,
     UserDetailsComponent,
     HomeComponent,
-    ChatsListComponent
+    ChatsListComponent,
+    ProfileComponent
   ],
   imports: [
     BrowserModule,
@@ -50,6 +53,7 @@ import { ChatsListComponent } from './components/chats-list/chats-list.component
     UserService,
     ChatService,
     MessageService,
+    ProfileService,
     AuthGuardService,
     {
       provide: HTTP_INTERCEPTORS,

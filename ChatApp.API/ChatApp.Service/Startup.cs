@@ -39,6 +39,7 @@ namespace ChatApp.Service
             services.AddScoped<IUserService, UserService>();
             services.AddScoped<IChatService, ChatService>();
             services.AddScoped<IMessageService, MessageService>();
+            services.AddScoped<IProfileService, ProfileService>();
         }
 
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
