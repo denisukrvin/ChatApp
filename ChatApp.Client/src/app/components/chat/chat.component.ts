@@ -5,6 +5,7 @@ import { ToastrService } from 'ngx-toastr';
 import * as signalR from '@microsoft/signalr';
 import { ActivatedRoute } from '@angular/router';
 import { map, mergeMap } from 'rxjs/operators';
+import { AuthService } from '../../services/auth.service';
 
 @Component({
   selector: 'app-chat',
@@ -15,11 +16,13 @@ export class ChatComponent implements OnInit, AfterViewChecked {
 
   messagesList: Array<Message> = [];
   selectedChatId: number;
+  currentUserId: number;
   chatMessageText: string = '';
   messagesBlock: HTMLElement;
   private hubConnection: signalR.HubConnection;
 
-  constructor(private messageService: MessageService, private toastrService: ToastrService, private route: ActivatedRoute) { }
+  constructor(private messageService: MessageService, private toastrService: ToastrService, private route: ActivatedRoute,
+    private authService: AuthService) { }
   
   ngOnInit(): void {
     this.fetchData();
@@ -32,6 +35,7 @@ export class ChatComponent implements OnInit, AfterViewChecked {
       return id;
     }), mergeMap(id => this.messageService.all(id))).subscribe(res => {
       if (res){
+        this.currentUserId = this.authService.getUserId();
         this.messagesList = res;
         this.initializeSignalRConnection(this.selectedChatId);
       }

@@ -63,9 +63,9 @@ namespace ChatApp.Service.Services
             {
                 Id = c.id,
                 FirstMemberId = c.first_member_id,
-                FirstMember = new UserModel{ Id = c.first_member_.id, Name = c.first_member_.name, Email = c.first_member_.email },
+                FirstMember = new UserModel{ Id = c.first_member_.id, Avatar = c.first_member_.avatar, Name = c.first_member_.name },
                 SecondMemberId = c.second_member_id,
-                SecondMember = new UserModel{ Id = c.second_member_.id, Name = c.second_member_.name, Email = c.second_member_.email }
+                SecondMember = new UserModel{ Id = c.second_member_.id, Avatar = c.second_member_.avatar, Name = c.second_member_.name }
             }).ToList();
         }
     }

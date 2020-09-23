@@ -13,7 +13,7 @@ import { ToastrService } from 'ngx-toastr';
 })
 export class UserDetailsComponent implements OnInit {
   userId: string;
-  user: User = { id: 0, name: 'n/a', email: 'n/a' };
+  user: User = { id: 0, avatar: null, name: 'n/a', description: null };
   constructor(private route: ActivatedRoute, private router: Router, private userService: UserService, private chatService: ChatService, private toastrService: ToastrService) { 
     this.fetchData();
   }

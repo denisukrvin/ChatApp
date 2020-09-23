@@ -85,7 +85,9 @@ namespace ChatApp.Service.Services
             return users.Select(u => new UserModel
             {
                 Id = u.id,
+                Avatar = u.avatar,
                 Name = u.name,
+                Description = u.description,
                 Email = u.email
             }).ToList();
         }

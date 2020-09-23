@@ -5,7 +5,10 @@
     <div class="card-body chats-block">
         <div class="list-unstyled" *ngIf="chatsList.length > 0">
             <a routerLink="/chat/{{chat.id}}" class="media chats-block-item d-flex align-items-center p-2" [ngClass]="{'active': selectedChatId == chat.id}" *ngFor="let chat of chatsList">
-                <img src="assets/img/default-user-avatar.png" class="rounded-circle" style="max-height: 35px;">
+                <img *ngIf="currentUserId == chat.firstMemberId; else elseBlock" src="{{chat.secondMember.avatar ? chat.secondMember.avatar : 'assets/img/default-user-avatar.png'}}" class="rounded-circle" style="max-height: 35px;">
+                <ng-template #elseBlock>
+                    <img src="{{chat.firstMember.avatar ? chat.firstMember.avatar : 'assets/img/default-user-avatar.png'}}" class="rounded-circle" style="max-height: 35px;">
+                </ng-template>
                 <div class="media-body ml-2">
                     {{currentUserId == chat.firstMemberId ? chat.secondMember.name : chat.firstMember.name}}
                 </div>

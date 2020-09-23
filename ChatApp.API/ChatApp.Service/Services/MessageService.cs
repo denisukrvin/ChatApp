@@ -66,7 +66,7 @@ namespace ChatApp.Service.Services
                 Id = m.id,
                 ChatId = m.chat_id,
                 UserId = m.user_id,
-                User = new UserModel { Id = m.user_.id, Name = m.user_.name },
+                User = new UserModel { Id = m.user_.id, Avatar = m.user_.avatar, Name = m.user_.name },
                 Text = m.text,
                 Date = m.creation_date
             }).ToList();

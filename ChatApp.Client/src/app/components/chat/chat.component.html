@@ -1,6 +1,6 @@
 <div class="container">
     <div class="row">
-        <div class="col-md-4">
+        <div class="col-md-4 mb-5 mb-md-0">
             <app-chats-list [selectedChatId]="selectedChatId"></app-chats-list>
         </div>
         <div class="col-md-8">
@@ -11,7 +11,7 @@
                 <div class="card-body messages-block" id="messages-block">
                     <ul class="list-unstyled" *ngIf="messagesList.length > 0">
                         <li class="media mb-3" *ngFor="let message of messagesList">
-                            <img src="assets/img/default-user-avatar.png" class="rounded-circle" style="max-height: 40px;">
+                            <img src="{{message.user.avatar ? message.user.avatar : 'assets/img/default-user-avatar.png'}}" class="rounded-circle" style="max-height: 40px;">
                             <div class="media-body ml-3">
                                 <div class="d-flex justify-content-between align-items-center">
                                     <div class="message-author small text-muted">

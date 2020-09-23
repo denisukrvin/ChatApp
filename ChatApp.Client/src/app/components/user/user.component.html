@@ -4,7 +4,7 @@
             <div class="list-group">
                 <a routerLink="/users/{{user.id}}" class="list-group-item list-group-item-action d-flex align-items-center" *ngFor="let user of users">
                     <div class="user-image">
-                        <img src="assets/img/default-user-avatar.png" class="rounded-circle" style="max-height: 30px;" />
+                        <img src="{{user.avatar ? user.avatar : 'assets/img/default-user-avatar.png'}}" class="rounded-circle" style="max-height: 30px;" />
                     </div>
                     <div class="user-name ml-2">
                         {{user.name}}
