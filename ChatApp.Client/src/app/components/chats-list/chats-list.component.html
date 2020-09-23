@@ -1,0 +1,18 @@
+<div class="card">
+    <div class="card-header text-center">
+        Chats
+    </div>
+    <div class="card-body chats-block">
+        <div class="list-unstyled" *ngIf="chatsList.length > 0">
+            <a routerLink="/chat/{{chat.id}}" class="media chats-block-item d-flex align-items-center p-2" [ngClass]="{'active': selectedChatId == chat.id}" *ngFor="let chat of chatsList">
+                <img src="assets/img/default-user-avatar.png" class="rounded-circle" style="max-height: 35px;">
+                <div class="media-body ml-2">
+                    {{currentUserId == chat.firstMemberId ? chat.secondMember.name : chat.firstMember.name}}
+                </div>
+            </a>
+        </div>
+        <div class="alert alert-light text-center" role="alert" *ngIf="chatsList.length === 0">
+            Chats not found
+        </div>
+    </div>
+</div>

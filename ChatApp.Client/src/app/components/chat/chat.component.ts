@@ -1,46 +1,39 @@
-import { Component, OnInit } from '@angular/core';
-import { Chat } from '../../models/chat/chat';
-import { AuthService } from '../../services/auth.service';
-import { ChatService } from '../../services/chat.service';
+import { Component, OnInit, AfterViewChecked  } from '@angular/core';
 import { MessageService } from '../../services/message.service';
 import { Message } from '../../models/message/message';
 import { ToastrService } from 'ngx-toastr';
 import * as signalR from '@microsoft/signalr';
+import { ActivatedRoute } from '@angular/router';
+import { map, mergeMap } from 'rxjs/operators';
 
 @Component({
   selector: 'app-chat',
   templateUrl: './chat.component.html',
   styleUrls: ['./chat.component.css']
 })
-export class ChatComponent implements OnInit {
+export class ChatComponent implements OnInit, AfterViewChecked {
 
-  chatsList: Array<Chat> = [];
   messagesList: Array<Message> = [];
-  currentUserId: number;
   selectedChatId: number;
   chatMessageText: string = '';
+  messagesBlock: HTMLElement;
   private hubConnection: signalR.HubConnection;
 
-  constructor(private chatService: ChatService, private authService: AuthService, private messageService: MessageService, private toastrService: ToastrService) { }
+  constructor(private messageService: MessageService, private toastrService: ToastrService, private route: ActivatedRoute) { }
   
   ngOnInit(): void {
     this.fetchData();
   }
 
   fetchData(){
-    this.currentUserId = this.authService.getUserId();
-    this.chatService.all().subscribe(res => {
-      this.chatsList = res;
-    });
-  }
-
-  showChatAndGetMessages(chatId) {
-    this.selectedChatId = chatId;
-    this.initializeSignalRConnection(chatId);
-
-    this.messageService.all(this.selectedChatId).subscribe(res => {
-      if (res) {
+    this.route.params.pipe(map(params => {
+      const id = params['id'];
+      this.selectedChatId = parseInt(id);
+      return id;
+    }), mergeMap(id => this.messageService.all(id))).subscribe(res => {
+      if (res){
         this.messagesList = res;
+        this.initializeSignalRConnection(this.selectedChatId);
       }
       else {
         this.toastrService.error('Something went wrong, please try again later');
@@ -52,6 +45,8 @@ export class ChatComponent implements OnInit {
     if (this.chatMessageText) {
       this.messageService.create(this.selectedChatId, this.chatMessageText).subscribe(res => {
         if (res['success']) {
+          this.messagesBlock = document.getElementById("messages-block");    
+          this.messagesBlock.scrollTop = this.messagesBlock.scrollHeight; 
           this.chatMessageText = '';
         }
         else {
@@ -82,6 +77,11 @@ export class ChatComponent implements OnInit {
       this.hubConnection.on('ReceiveMessage', (message) => {
         this.messagesList.push(message);
       });
+  }
+
+  ngAfterViewChecked() {
+    this.messagesBlock = document.getElementById("messages-block");
+    this.messagesBlock.scrollTop = this.messagesBlock.scrollHeight;
   }
 
 }

@@ -3,24 +3,6 @@
     overflow-y: scroll;
 }
 
-.chats-block {
-    height: 300px;
-    overflow-y: scroll;
-}
-
-.chats-block-item {
-    border-radius: 6px;
-}
-
-.chats-block-item:hover {
-    cursor: pointer;
-    background-color: #f2f6f9;
-}
-
-.chats-block-item.active {
-    background-color: #f2f6f9;
-}
-
 .message-text {
     background-color: #f2f6f9;
     border-radius: 6px;

@@ -38,7 +38,8 @@ export class UserDetailsComponent implements OnInit {
   createChat(userId) {
     this.chatService.create(userId).subscribe(res => {
       if (res['success'] && res['data']['chat_id']) {
-        this.router.navigate(['']);
+        let chatId = res['data']['chat_id'];
+        this.router.navigate(['/chat/' + chatId]);
       }
       else { 
         this.toastrService.error(res['message']);

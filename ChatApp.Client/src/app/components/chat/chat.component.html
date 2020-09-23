@@ -1,31 +1,14 @@
 <div class="container">
     <div class="row">
         <div class="col-md-4">
-            <div class="card">
-                <div class="card-header text-center">
-                    Chats
-                </div>
-                <div class="card-body chats-block">
-                    <ul class="list-unstyled" *ngIf="chatsList.length > 0">
-                        <li class="media chats-block-item d-flex align-items-center p-2" [ngClass]="{'active': selectedChatId === chat.id}" (click)="showChatAndGetMessages(chat.id)" *ngFor="let chat of chatsList">
-                            <img src="assets/img/default-user-avatar.png" class="rounded-circle" style="max-height: 35px;">
-                            <div class="media-body ml-2">
-                                {{currentUserId == chat.firstMemberId ? chat.secondMember.name : chat.firstMember.name}}
-                            </div>
-                        </li>
-                    </ul>
-                    <div class="alert alert-light text-center" role="alert" *ngIf="chatsList.length === 0">
-                        Chats not found
-                    </div>
-                </div>
-            </div>
+            <app-chats-list [selectedChatId]="selectedChatId"></app-chats-list>
         </div>
         <div class="col-md-8">
             <div class="card" *ngIf="selectedChatId > 0">
                 <div class="card-header text-center">
                     Messages
                 </div>
-                <div class="card-body messages-block">
+                <div class="card-body messages-block" id="messages-block">
                     <ul class="list-unstyled" *ngIf="messagesList.length > 0">
                         <li class="media mb-3" *ngFor="let message of messagesList">
                             <img src="assets/img/default-user-avatar.png" class="rounded-circle" style="max-height: 40px;">

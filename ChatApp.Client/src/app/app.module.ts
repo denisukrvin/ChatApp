@@ -21,6 +21,8 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { ToastrModule } from 'ngx-toastr';
 import { MessageService } from './services/message.service';
 import { FormsModule } from '@angular/forms';
+import { HomeComponent } from './components/home/home.component';
+import { ChatsListComponent } from './components/chats-list/chats-list.component';
 
 @NgModule({
   declarations: [
@@ -30,7 +32,9 @@ import { FormsModule } from '@angular/forms';
     ChatComponent,
     HeaderComponent,
     UserComponent,
-    UserDetailsComponent
+    UserDetailsComponent,
+    HomeComponent,
+    ChatsListComponent
   ],
   imports: [
     BrowserModule,

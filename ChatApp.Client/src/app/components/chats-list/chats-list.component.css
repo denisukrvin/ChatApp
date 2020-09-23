@@ -1,0 +1,13 @@
+.chats-block {
+    height: 300px;
+    overflow-y: scroll;
+}
+
+.chats-block-item {
+    border-radius: 6px;
+    color: #343a40;
+}
+
+.chats-block-item.active, .chats-block-item:hover {
+    background-color: #f2f6f9;
+}
