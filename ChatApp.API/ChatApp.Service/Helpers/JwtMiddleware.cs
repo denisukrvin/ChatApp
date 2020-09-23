@@ -46,7 +46,7 @@ namespace ChatApp.Service.Helpers
                     ClockSkew = TimeSpan.Zero
                 }, out SecurityToken validatedToken);
 
-                var jwtToken = (JwtSecurityToken)validatedToken;
+                var jwtToken = (JwtSecurityToken) validatedToken;
                 var userId = int.Parse(jwtToken.Claims.First(x => x.Type == "user_id").Value);
 
                 // attach user to context on successful jwt validation

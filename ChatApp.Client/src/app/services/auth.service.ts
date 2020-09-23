@@ -53,4 +53,9 @@ export class AuthService {
     var token = this.getDecodedToken();
     return token['user_name'];
   }
+
+  getUserAvatar() {
+    var token = this.getDecodedToken();
+    return token['user_avatar'];
+  }
 }

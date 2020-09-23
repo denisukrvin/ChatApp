@@ -69,7 +69,7 @@ namespace ChatApp.Service.Services
             var key = Encoding.ASCII.GetBytes(_appSettings.Secret);
             var tokenDescriptor = new SecurityTokenDescriptor
             {
-                Subject = new ClaimsIdentity(new[] { new Claim("user_id", model.id.ToString()), new Claim("user_name", model.name) }),
+                Subject = new ClaimsIdentity(new[] { new Claim("user_id", model.id.ToString()), new Claim("user_name", model.name), new Claim("user_avatar", model.avatar ?? "") }),
                 Expires = DateTime.UtcNow.AddDays(7),
                 SigningCredentials = new SigningCredentials(new SymmetricSecurityKey(key), SecurityAlgorithms.HmacSha256Signature)
             };

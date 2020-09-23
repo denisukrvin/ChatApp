@@ -8,9 +8,15 @@ import { AuthService } from '../../services/auth.service';
   styleUrls: ['./header.component.css']
 })
 export class HeaderComponent implements OnInit {
+  
+  userName: string = 'n/a';
+  userAvatar: string = '';
+
   constructor(public authService: AuthService, private router: Router) { }
 
   ngOnInit(): void {
+    this.userName = this.authService.getUserName();
+    this.userAvatar = this.authService.getUserAvatar();
   }
 
   logout() {

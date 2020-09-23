@@ -1,8 +1,10 @@
-﻿using ChatApp.Service.Helpers;
+﻿using ChatApp.Service.Tools;
+using ChatApp.Service.Helpers;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Http;
 using ChatApp.Service.Interfaces;
 using ChatApp.Service.Extensions;
+using Microsoft.Extensions.Options;
 using ChatApp.Service.Models.Profile;
 
 namespace ChatApp.Service.Controllers
@@ -12,10 +14,12 @@ namespace ChatApp.Service.Controllers
     [Route("api/[controller]")]
     public class ProfileController : ControllerBase
     {
+        private readonly AppSettings _appSettings;
         private IProfileService _profileService;
 
-        public ProfileController(IProfileService profileService)
+        public ProfileController(IOptions<AppSettings> appSettings, IProfileService profileService)
         {
+            _appSettings = appSettings.Value;
             _profileService = profileService;
         }
 
@@ -38,6 +42,13 @@ namespace ChatApp.Service.Controllers
                 return BadRequest();
 
             var userId = HttpContext.GetUserId();
+            // save avatar
+            if (!string.IsNullOrWhiteSpace(model.Avatar))
+            {
+                var base64Image = model.Avatar.Substring(model.Avatar.IndexOf(",") + 1);
+                model.Avatar = ImgBBExtensions.UploadImage(_appSettings.ApiKey, base64Image);
+            }          
+
             var result = _profileService.Edit(userId, model);
             return Ok(result);
         }

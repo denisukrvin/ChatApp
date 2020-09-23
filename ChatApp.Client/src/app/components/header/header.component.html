@@ -19,8 +19,8 @@
         <ul class="navbar-nav">
           <li class="nav-item dropdown">
               <a class="nav-link text-dark dropdown-toggle d-flex align-items-center" href="#" id="navbarDropdownMenuLink" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                  <img src="assets/img/default-user-avatar.png" class="rounded-circle" style="max-height: 30px;" />
-                  <span class="ml-2">{{authService.getUserName()}}</span>
+                  <img src="{{userAvatar ? userAvatar : 'assets/img/default-user-avatar.png'}}" class="rounded-circle" style="max-height: 30px;" />
+                  <span class="ml-2">{{userName}}</span>
               </a>
               <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
                   <a routerLink="/profile" class="dropdown-item text-dark">Profile</a>
