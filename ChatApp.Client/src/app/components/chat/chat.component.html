@@ -10,9 +10,9 @@
                 </div>
                 <div class="card-body messages-block" id="messages-block">
                     <ul class="list-unstyled" *ngIf="messagesList.length > 0">
-                        <li class="media mb-3" *ngFor="let message of messagesList">
+                        <li class="media mb-3" [class.backwards]="currentUserId == message.userId" *ngFor="let message of messagesList">
                             <img src="{{message.user.avatar ? message.user.avatar : 'assets/img/default-user-avatar.png'}}" class="rounded-circle" style="max-height: 40px;">
-                            <div class="media-body ml-3">
+                            <div class="media-body" [class.mr-3]="currentUserId == message.userId" [class.ml-3]="currentUserId != message.userId">
                                 <div class="d-flex justify-content-between align-items-center">
                                     <div class="message-author small text-muted">
                                         {{message.user.name}}
@@ -33,10 +33,15 @@
                 </div>
                 <div class="card-footer">
                     <div class="form-group">
-                        <textarea [(ngModel)]="chatMessageText" class="form-control" rows="4" placeholder="Write a message..."></textarea>
+                        <textarea [(ngModel)]="chatMessageText" class="form-control" rows="3" placeholder="Write a message..."></textarea>
                     </div>
                     <div class="form-group d-flex justify-content-end">
-                        <button type="button" class="btn btn-success btn-sm" (click)="sendMessage()">Send</button>
+                        <button type="button" class="btn btn-success btn-sm" (click)="sendMessage()" [disabled]="showSpinner">
+                            <div class="spinner-border spinner-border-sm text-light" role="status" *ngIf="showSpinner">
+                                <span class="sr-only">Loading...</span>
+                            </div>
+                            <span *ngIf="!showSpinner">Send</span> 
+                        </button>
                     </div>
                 </div>
             </div>

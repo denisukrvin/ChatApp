@@ -26,7 +26,12 @@
                             </div>
                         </div>
                         <div class="form-group">
-                            <button type="submit" class="btn btn-primary btn-block">Login</button>
+                            <button type="submit" class="btn btn-primary btn-block" [disabled]="showSpinner">
+                                <div class="spinner-border spinner-border-sm text-light" role="status" *ngIf="showSpinner">
+                                    <span class="sr-only">Loading...</span>
+                                </div>
+                                <span *ngIf="!showSpinner">Login</span>
+                            </button>
                             <p class="text-center pt-3">Don't have an account? <a routerLink="/register">Register</a></p>
                         </div>
                     </form>

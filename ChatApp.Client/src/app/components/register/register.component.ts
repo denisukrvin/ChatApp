@@ -15,6 +15,7 @@ import { MustMatch } from '../../helpers/must-match.validator';
 export class RegisterComponent implements OnInit {
   registerForm: FormGroup;
   submitted = false;
+  showSpinner = false;
   constructor(private fb: FormBuilder, private authService: AuthService, private router: Router, private toastrService: ToastrService) {
     this.registerForm = this.fb.group({
       name: ['', [Validators.required, Validators.minLength(2), Validators.maxLength(30)]],
@@ -31,8 +32,10 @@ export class RegisterComponent implements OnInit {
 
   register() {
     this.submitted = true;
+    this.showSpinner = true;
     // stop here if form is invalid
     if (this.registerForm.invalid) {
+      this.showSpinner = false;
       return;
     }
 
@@ -43,6 +46,7 @@ export class RegisterComponent implements OnInit {
       }
       else { 
         this.toastrService.error(res['message']);
+        this.showSpinner = false;
       }
     })
   }

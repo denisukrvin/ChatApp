@@ -8,3 +8,32 @@
     border-radius: 6px;
     padding: 10px;
 }
+
+.media {
+    max-width: 60%;
+}
+
+.media.backwards {
+    margin-left: auto;
+    margin-right: 0;
+}
+
+.media.backwards > .media-body > .message-text {
+    background-color: #dcf2fa;
+}
+
+.media.backwards > img {
+    order: 2;
+}
+
+.media.backwards > div.media-body {
+    order: 1;
+}
+
+.media.backwards > .media-body > div > .message-author {
+    order: 2;
+}
+
+.media.backwards > .media-body > div > .date {
+    order: 1;
+}

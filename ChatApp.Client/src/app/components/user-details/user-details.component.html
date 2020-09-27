@@ -1,21 +1,21 @@
 <div class="container">
     <div class="row d-flex justify-content-center">
-        <div class="col-10 col-md-8 col-lg-6">
-            <div class="card">
-                <div class="card-body d-flex align-items-center">
-                    <div class="user-image">
+        <div class="col-10 col-sm-9 col-md-7 col-lg-5">
+            <div class="card p-2">
+                <div class="card-body">
+                    <div class="user-avatar text-center mb-3">
                         <img src="{{user.avatar ? user.avatar : 'assets/img/default-user-avatar.png'}}" class="rounded-circle" style="max-height: 96px;" />
                     </div>
-                    <div class="user-details ml-3">
-                        <div class="user-name">
-                            {{user.name}}
-                        </div>
-                        <div class="user-description">
-                            {{user.description}}
-                        </div>
-                        <div class="user-chat-btn mt-2">
-                            <button (click)="createChat(user.id)" type="button" class="btn btn-success btn-sm">Send message</button>
-                        </div>
+                    <div class="user-name mb-1">
+                        <div class="text-muted small">Name</div>
+                        <div class="user-name-text">{{user.name}}</div>
+                    </div>
+                    <div *ngIf="user.description" class="user-description mb-1">
+                        <div class="text-muted small">Description</div>
+                        <div class="user-description-text">{{user.description}}</div>
+                    </div>
+                    <div class="user-chat-btn text-center">
+                        <button (click)="createChat(user.id)" type="button" class="btn btn-success btn-sm mt-3">Send message</button>
                     </div>
                 </div>
             </div>

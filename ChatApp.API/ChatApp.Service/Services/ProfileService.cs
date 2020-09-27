@@ -43,7 +43,7 @@ namespace ChatApp.Service.Services
                 user.record_state = 2;
                 
                 context.SaveChanges();
-                return new OperationResponse { Success = true };
+                return new OperationResponse { Success = true, Message = "Successfully updated" };
             }
         }
 

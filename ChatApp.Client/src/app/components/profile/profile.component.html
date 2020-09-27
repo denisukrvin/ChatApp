@@ -6,7 +6,7 @@
                     <form [formGroup]="profileForm" (ngSubmit)="edit()">
                         <div class="form-group text-center">
                             <input type="file" accept="image/*" (change)="onFileSelected($event, profileAvatarTag)" #inputImage hidden>
-                            <img src="{{ profileAvatar ? profileAvatar : 'assets/img/default-user-avatar.png'}}" class="rounded-circle profile-avatar" style="max-height: 96px;" (click)="inputImage.click()" #profileAvatarTag />                        
+                            <img src="{{profileAvatar ? profileAvatar : 'assets/img/default-user-avatar.png'}}" class="rounded-circle profile-avatar" style="max-height: 96px;" (click)="inputImage.click()" #profileAvatarTag />                        
                         </div>
                         <div class="form-group">
                             <label for="profileFormName">Name</label>
@@ -26,7 +26,12 @@
                             </div>
                         </div>
                         <div class="form-group">
-                            <button type="submit" class="btn btn-primary btn-block">Save</button>
+                            <button type="submit" class="btn btn-primary btn-block" [disabled]="showSpinner">
+                                <div class="spinner-border spinner-border-sm text-light" role="status" *ngIf="showSpinner">
+                                    <span class="sr-only">Loading...</span>
+                                </div>
+                                <span *ngIf="!showSpinner">Save</span>
+                            </button>
                         </div>
                     </form>
                 </div>

@@ -12,6 +12,7 @@ import { ToastrService } from 'ngx-toastr';
 export class LoginComponent implements OnInit {
   loginForm: FormGroup;
   submitted = false;
+  showSpinner = false;
   constructor(private fb: FormBuilder, private authService: AuthService, private router: Router, private toastrService: ToastrService) {
     this.loginForm = this.fb.group({
       email: ['', [Validators.required, Validators.email, Validators.minLength(6), Validators.maxLength(30)]],
@@ -24,8 +25,10 @@ export class LoginComponent implements OnInit {
 
   login() {
     this.submitted = true;
+    this.showSpinner = true;
     // stop here if form is invalid
     if (this.loginForm.invalid) {
+      this.showSpinner = false;
       return;
     }
 
@@ -36,6 +39,7 @@ export class LoginComponent implements OnInit {
       }
       else { 
         this.toastrService.error(res['message']);
+        this.showSpinner = false;
       }
     })
   }

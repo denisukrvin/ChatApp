@@ -12,11 +12,13 @@ import { Profile } from '../../models/profile/profile';
 export class ProfileComponent implements OnInit {
   profileForm: FormGroup;
   submitted = false;
+  showSpinner = false;
   profileAvatar: any;
+  updatedProfileAvatar: any;
   constructor(private fb: FormBuilder, private profileService: ProfileService, private toastrService: ToastrService) { 
     this.profileForm = this.fb.group({
-      name: ['n/a', [Validators.required, Validators.minLength(2), Validators.maxLength(30)]],
-      description: ['n/a', [Validators.minLength(1), Validators.maxLength(500)]]
+      name: ['', [Validators.required, Validators.minLength(2), Validators.maxLength(30)]],
+      description: ['', [Validators.minLength(1), Validators.maxLength(500)]]
     })
    }
 
@@ -28,7 +30,7 @@ export class ProfileComponent implements OnInit {
     this.profileService.get().subscribe(res => {
       if (res) {
         this.profileAvatar = res.avatar;
-        this.profileForm.patchValue(res);    
+        this.profileForm.patchValue(res);
       }
       else {
         this.toastrService.error('Something went wrong, please try again later');
@@ -38,20 +40,23 @@ export class ProfileComponent implements OnInit {
 
   edit() {
     this.submitted = true;
+    this.showSpinner = true;
     // stop here if form is invalid
     if (this.profileForm.invalid) {
+      this.showSpinner = false;
       return;
     }
 
-    let profileModel: Profile = { avatar: this.profileAvatar, name: this.profileForm.get('name').value, description: this.profileForm.get('description').value };
+    let profileModel: Profile = { avatar: this.updatedProfileAvatar, name: this.profileForm.get('name').value, description: this.profileForm.get('description').value };
     this.profileService.edit(profileModel).subscribe(res => {
       if (res['success']) {
-        location.reload();
-        this.toastrService.success('Updated!');
+        this.toastrService.success(res['message']);
       }
       else { 
         this.toastrService.error(res['message']);
       }
+
+      this.showSpinner = false;
     }) 
   }
 
@@ -62,8 +67,7 @@ export class ProfileComponent implements OnInit {
         reader.readAsDataURL(event.target.files[0]);
         reader.onload = (event) => {
           var result = event.target.result;
-          this.profileAvatar = result;
-          //this.profileForm.get('avatar').setValue(event.target.result);
+          this.updatedProfileAvatar = result;
           element.setAttribute('src', result);
         }
      }

@@ -8,7 +8,7 @@ import { UserService } from '../../services/user.service';
   styleUrls: ['./user.component.css']
 })
 export class UserComponent implements OnInit {
-  users: Array<User>;
+  usersList: Array<User> = [];
   constructor(private userService: UserService) { }
 
   ngOnInit(): void {
@@ -17,7 +17,7 @@ export class UserComponent implements OnInit {
 
   fetchData(){
     this.userService.all().subscribe(res => {
-      this.users = res;
+      this.usersList = res;
     });
   }
 

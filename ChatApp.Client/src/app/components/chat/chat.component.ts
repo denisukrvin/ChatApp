@@ -19,6 +19,7 @@ export class ChatComponent implements OnInit, AfterViewChecked {
   currentUserId: number;
   chatMessageText: string = '';
   messagesBlock: HTMLElement;
+  showSpinner = false;
   private hubConnection: signalR.HubConnection;
 
   constructor(private messageService: MessageService, private toastrService: ToastrService, private route: ActivatedRoute,
@@ -46,20 +47,25 @@ export class ChatComponent implements OnInit, AfterViewChecked {
   }
 
   sendMessage() {
+    this.showSpinner = true;
+
     if (this.chatMessageText) {
       this.messageService.create(this.selectedChatId, this.chatMessageText).subscribe(res => {
         if (res['success']) {
           this.messagesBlock = document.getElementById("messages-block");    
           this.messagesBlock.scrollTop = this.messagesBlock.scrollHeight; 
           this.chatMessageText = '';
+          this.showSpinner = false;
         }
         else {
           this.toastrService.error(res['message']);
+          this.showSpinner = false;
         }
       })
     }
     else {
       this.toastrService.warning('The message cannot be empty');
+      this.showSpinner = false;
     }
   }
 
