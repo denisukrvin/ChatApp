@@ -1,11 +1,11 @@
-import { Component, OnInit, AfterViewChecked  } from '@angular/core';
+import { Component, OnInit, AfterViewChecked } from '@angular/core';
 import { MessageService } from '../../services/message.service';
 import { Message } from '../../models/message/message';
 import { ToastrService } from 'ngx-toastr';
 import * as signalR from '@microsoft/signalr';
 import { ActivatedRoute } from '@angular/router';
 import { map, mergeMap } from 'rxjs/operators';
-import { AuthService } from '../../services/auth.service';
+import { AuthService } from '../../services/auth/auth.service';
 
 @Component({
   selector: 'app-chat',
@@ -93,5 +93,4 @@ export class ChatComponent implements OnInit, AfterViewChecked {
     this.messagesBlock = document.getElementById("messages-block");
     this.messagesBlock.scrollTop = this.messagesBlock.scrollHeight;
   }
-
 }
