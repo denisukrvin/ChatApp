@@ -3,7 +3,7 @@
     overflow-y: scroll;
 }
 
-.message-text {
+.message-body-text {
     background-color: #f2f6f9;
     border-radius: 6px;
     padding: 10px;
@@ -18,7 +18,7 @@
     margin-right: 0;
 }
 
-.media.backwards > .media-body > .message-text {
+.media.backwards > .media-body > .message-body-text {
     background-color: #dcf2fa;
 }
 
@@ -27,13 +27,5 @@
 }
 
 .media.backwards > div.media-body {
-    order: 1;
-}
-
-.media.backwards > .media-body > div > .message-author {
-    order: 2;
-}
-
-.media.backwards > .media-body > div > .date {
     order: 1;
 }

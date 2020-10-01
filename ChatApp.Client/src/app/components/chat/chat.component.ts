@@ -1,11 +1,12 @@
 import { Component, OnInit, AfterViewChecked } from '@angular/core';
 import { MessageService } from '../../services/message.service';
-import { Message } from '../../models/message/message';
 import { ToastrService } from 'ngx-toastr';
 import * as signalR from '@microsoft/signalr';
 import { ActivatedRoute } from '@angular/router';
 import { map, mergeMap } from 'rxjs/operators';
 import { AuthService } from '../../services/auth/auth.service';
+import { MessageGroup } from '../../models/message/message-group';
+import { Message } from '../../models/message/message';
 
 @Component({
   selector: 'app-chat',
@@ -14,7 +15,7 @@ import { AuthService } from '../../services/auth/auth.service';
 })
 export class ChatComponent implements OnInit, AfterViewChecked {
 
-  messagesList: Array<Message> = [];
+  messagesList: Array<MessageGroup> = [];
   selectedChatId: number;
   currentUserId: number;
   chatMessageText: string = '';
@@ -84,8 +85,16 @@ export class ChatComponent implements OnInit, AfterViewChecked {
       .then(() => console.log('Connection started'))
       .catch(err => console.log('Error while starting connection: ' + err))
 
-      this.hubConnection.on('ReceiveMessage', (message) => {
-        this.messagesList.push(message);
+      this.hubConnection.on('ReceiveMessage', (message: Message) => {
+        var messageDate = new Date(message.date).toISOString().split('T')[0];
+        var group = this.messagesList.find(x => x.date === messageDate);
+        if (group) {
+          group.messages.push(message);
+        }
+        else {
+          let newGroup: MessageGroup = {date: messageDate, messages: Array<Message>(message)};
+          this.messagesList.push(newGroup);
+        }
       });
   }
 

@@ -9,24 +9,34 @@
                     Messages
                 </div>
                 <div class="card-body messages-block" id="messages-block">
-                    <ul class="list-unstyled" *ngIf="messagesList.length > 0">
-                        <li class="media mb-3" [class.backwards]="currentUserId == message.userId" *ngFor="let message of messagesList">
-                            <img src="{{message.user.avatar ? message.user.avatar : 'assets/img/default-user-avatar.png'}}" class="rounded-circle" style="max-height: 40px;">
-                            <div class="media-body" [class.mr-3]="currentUserId == message.userId" [class.ml-3]="currentUserId != message.userId">
-                                <div class="d-flex justify-content-between align-items-center">
-                                    <div class="message-author small text-muted">
-                                        {{message.user.name}}
-                                    </div>
-                                    <div class="date small text-muted">
-                                        {{message.date | date:'MMM. d, hh:mm aa'}}
-                                    </div>
+                    <div class="messages" *ngIf="messagesList.length > 0">
+                        <div class="messages-group" *ngFor="let group of messagesList">
+                            <div class="row mt-3 mb-3">
+                                <div class="col-4">
+                                    <hr>
                                 </div>
-                                <div class="message-text">
-                                    {{message.text}}
+                                <div class="col-4 text-center text-muted">
+                                    {{group.date | date:'EEEE, MMMM d, yyyy'}}
+                                </div>
+                                <div class="col-4">
+                                    <hr>
                                 </div>
                             </div>
-                        </li>
-                    </ul>
+                            <ul class="list-unstyled">
+                                <li class="media mb-3" [class.backwards]="currentUserId == message.userId" *ngFor="let message of group.messages">
+                                    <img src="{{message.user.avatar ? message.user.avatar : 'assets/img/default-user-avatar.png'}}" class="rounded-circle" style="max-height: 40px;">
+                                    <div class="media-body" [class.mr-3]="currentUserId == message.userId" [class.ml-3]="currentUserId != message.userId">
+                                        <div class="message-head-text small text-muted">
+                                            {{message.user.name}}, {{message.date | date:'h:mm aa'}}
+                                        </div>
+                                        <div class="message-body-text">
+                                            {{message.text}}
+                                        </div>
+                                    </div>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
                     <div class="alert alert-light text-center" role="alert" *ngIf="messagesList.length === 0">
                         Messages not found
                     </div>
