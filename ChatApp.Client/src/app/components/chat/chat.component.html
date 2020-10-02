@@ -8,17 +8,23 @@
                 <div class="card-header text-center">
                     Messages
                 </div>
-                <div class="card-body messages-block" id="messages-block">
-                    <div class="messages" *ngIf="messagesList.length > 0">
+                <div class="card-body messages-block" id="messages-block" appScrollDirective infiniteScroll 
+                    [infiniteScrollDistance]="2" [infiniteScrollThrottle]="50" [scrollWindow]="false" (scrolledUp)="loadMessages()">
+                    <div class="messages-list" *ngIf="messagesList.length > 0">
+                        <div class="load-messages-spinner text-center">
+                            <div class="spinner-border text-secondary" role="status" *ngIf="showLoadMessagesSpinner">
+                                <span class="sr-only">Loading...</span>
+                            </div>
+                        </div>
                         <div class="messages-group" *ngFor="let group of messagesList">
                             <div class="row mt-3 mb-3">
-                                <div class="col-4">
+                                <div class="col-3 offset-1">
                                     <hr>
                                 </div>
-                                <div class="col-4 text-center text-muted">
+                                <div class="messages-group-text col-4 text-center text-muted">
                                     {{group.date | date:'EEEE, MMMM d, yyyy'}}
                                 </div>
-                                <div class="col-4">
+                                <div class="col-3">
                                     <hr>
                                 </div>
                             </div>

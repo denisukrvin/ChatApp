@@ -11,8 +11,8 @@ export class MessageService {
   private messagePath = environment.apiUrl + '/message';
   constructor(private http: HttpClient) { }
 
-  all(chatId: number): Observable<Array<MessageGroup>> {
-    return this.http.get<Array<MessageGroup>>(this.messagePath + '/all' + `/?chatId=${chatId}`);
+  all(chatId: number, lastMessageId: number = 0): Observable<Array<MessageGroup>> {
+    return this.http.get<Array<MessageGroup>>(this.messagePath + '/all' + `/?chatId=${chatId}` + `&lastMessageId=${lastMessageId}`);
   }
 
   create(chatId, text): Observable<any> {

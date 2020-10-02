@@ -13,7 +13,7 @@ import { Message } from '../../models/message/message';
   templateUrl: './chat.component.html',
   styleUrls: ['./chat.component.css']
 })
-export class ChatComponent implements OnInit, AfterViewChecked {
+export class ChatComponent implements OnInit {
 
   messagesList: Array<MessageGroup> = [];
   selectedChatId: number;
@@ -21,6 +21,7 @@ export class ChatComponent implements OnInit, AfterViewChecked {
   chatMessageText: string = '';
   messagesBlock: HTMLElement;
   showSpinner = false;
+  showLoadMessagesSpinner = false;
   private hubConnection: signalR.HubConnection;
 
   constructor(private messageService: MessageService, private toastrService: ToastrService, private route: ActivatedRoute,
@@ -101,5 +102,32 @@ export class ChatComponent implements OnInit, AfterViewChecked {
   ngAfterViewChecked() {
     this.messagesBlock = document.getElementById("messages-block");
     this.messagesBlock.scrollTop = this.messagesBlock.scrollHeight;
+  }
+
+  loadMessages() {
+    this.showLoadMessagesSpinner = true;
+    let lastMessageGroup = this.messagesList[0];
+    let lastMessageGroupMessage = lastMessageGroup.messages[0];
+    this.messageService.all(this.selectedChatId, lastMessageGroupMessage.id).subscribe(res => {
+      
+      res.forEach( (group) => {
+        var existingGroup = this.messagesList.find(x => x.date === group.date);
+        if (existingGroup) {
+          group.messages.reverse();
+          group.messages.forEach( (message) => {
+            let existingMessage = existingGroup.messages.find(x => x.id === message.id);
+            if (!existingMessage) {
+              existingGroup.messages.unshift(message);
+            }     
+          })
+        }
+        else {
+          let newGroup: MessageGroup = { date: group.date, messages: group.messages };
+          this.messagesList.unshift(newGroup);
+        }
+      });
+
+      this.showLoadMessagesSpinner = false;
+    });
   }
 }

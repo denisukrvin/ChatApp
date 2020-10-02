@@ -25,12 +25,12 @@ namespace ChatApp.Service.Controllers
         }
 
         [HttpGet("all")]
-        public IActionResult All(int chatId)
+        public IActionResult All(int chatId, int lastMessageId = 0)
         {
             if (chatId == 0)
                 return BadRequest();
 
-            var result = _messageService.All(chatId);
+            var result = _messageService.All(chatId, lastMessageId);
             return Ok(result);
         }
 

@@ -25,6 +25,7 @@ import { HomeComponent } from './components/home/home.component';
 import { ChatsListComponent } from './components/chats-list/chats-list.component';
 import { ProfileComponent } from './components/profile/profile.component';
 import { ProfileService } from './services/profile.service';
+import { InfiniteScrollModule } from 'ngx-infinite-scroll';
 
 @NgModule({
   declarations: [
@@ -46,7 +47,8 @@ import { ProfileService } from './services/profile.service';
     FormsModule,
     HttpClientModule,
     BrowserAnimationsModule,
-    ToastrModule.forRoot()
+    ToastrModule.forRoot(),
+    InfiniteScrollModule
   ],
   providers: [
     AuthService,

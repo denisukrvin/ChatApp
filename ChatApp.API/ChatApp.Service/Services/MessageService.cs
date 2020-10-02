@@ -12,19 +12,29 @@ namespace ChatApp.Service.Services
 {
     public class MessageService : IMessageService
     {
-        public List<MessageGroupModel> All(int chatId)
+        public List<MessageGroupModel> All(int chatId, int lastMessageId = 0)
         {
             if (chatId == 0)
                 return new List<MessageGroupModel>();
 
             using (var context = new DataContext())
             {
+                // query
                 var condition = context.message
                             .Include(m => m.user_)
-                            .Where(m => m.chat_id == chatId && m.record_state != 1)
-                            .ToList();
-                
+                            .Where(m => m.chat_id == chatId && m.record_state != 1);
+
+                // infinite scroll
+                if (lastMessageId > 0)
+                    condition = condition.Where(m => m.id < lastMessageId);
+
+                var messagesCount = condition.Count();
+                if (messagesCount >= 15)
+                    condition = condition.Skip(messagesCount - 15);
+
+                // grouping
                 var groupedMessages = condition
+                            .ToList()
                             .GroupBy(m => m.creation_date.Date)
                             .Select(g => new MessageGroupModel
                             {
